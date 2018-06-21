@@ -1,0 +1,27 @@
+{
+  "name": "grpc-plugins",
+  "version": "0.0.1",
+  "description": "React native and NodeJs grpc plugins for Node, Swift, Android",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anjmao/grpc-plugins.git"
+  },
+  "keywords": [
+    "gRPC",
+    "React",
+    "Native",
+    "Swift",
+    "Android",
+    "iOS"
+  ],
+  "author": "anjmao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anjmao/grpc-plugins/issues"
+  },
+  "homepage": "https://github.com/anjmao/grpc-plugins#readme"
+}
