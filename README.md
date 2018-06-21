@@ -23,26 +23,44 @@ yarn add grpc-plugins --dev
 ```shell
 #!/bin/bash
 
-OUTDIR=./src/proto
+NODE_OUTDIR=./src/proto
+RN_OUTDIR=./.rn-proto-out
 BINPATH=./node_modules/grpc-plugins/osx
 PROTOC=${BINPATH}/protoc
 
 # cleanup current outdir
-rm -rf ${OUTDIR}
-mkdir ${OUTDIR}
+rm -rf ${NODE_OUTDIR}
+mkdir ${NODE_OUTDIR}
+rm -rf ${RN_OUTDIR}
+mkdir ${RN_OUTDIR}
 
-# generate js codes via grpc-tools
+# nodejs proto and grpc
 ${PROTOC} \
---js_out=import_style=commonjs,binary:${OUTDIR} \
---grpc_out=${OUTDIR} \
+--js_out=import_style=commonjs,binary:${NODE_OUTDIR} \
+--grpc_out=${NODE_OUTDIR} \
 --plugin=protoc-gen-grpc=${BINPATH}/grpc_node_plugin \
 -I ./proto \
 ./proto/*.proto
 
-# generate d.ts codes
+# typescipt d.ts typings for node
 ${PROTOC} \
 --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
---ts_out=${OUTDIR} \
+--ts_out=${NODE_OUTDIR} \
 -I ./proto \
 ./proto/*.proto
+
+# swift proto
+${PROTOC} \
+--swift_out=${RN_OUTDIR} \
+--plugin=protoc-gen-grpc=${BINPATH}/protoc-gen-swift \
+-I ./proto \
+./proto/*.proto
+
+# swift gRPC
+${PROTOC} \
+--swiftgrpc_out=${RN_OUTDIR} \
+--plugin=protoc-gen-swiftgrpc=${BINPATH}/protoc-gen-swiftgrpc \
+-I ./proto \
+./proto/*.proto
+
 ```
