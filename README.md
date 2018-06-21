@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/grpc-plugins.svg)](https://badge.fury.io/js/grpc-plugins)
+
 # React Native | Node gRPC protoc compiler plugins
 
 While developing react native and nodejs I found it difficult to gather all protoc plugins from different sources. This is why I created this repository which contains
