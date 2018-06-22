@@ -1,6 +1,6 @@
 {
   "name": "grpc-plugins",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React native and NodeJs grpc plugins for Node, Swift, Android",
   "main": "index.js",
   "scripts": {
