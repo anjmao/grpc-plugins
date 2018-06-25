@@ -10,7 +10,7 @@ contains common gRPC protoc compiler plugins binaries which can be downloaded vi
 1. protoc (v3.6.9)[https://github.com/google/protobuf/releases/tag/v3.6.0]
 2. grpc_node_plugin (v1.6.6)[https://www.npmjs.com/package/grpc-tools/v/1.6.6]
 3. protoc-gen-grpc-java (v1.13.1)[https://github.com/grpc/grpc-java/releases/tag/v1.13.1]
-4. protoc-gen-swiftgrpc (v0.4.1)[protoc-gen-swiftgrpc]
+4. protoc-gen-swiftgrpc (v0.4.3)[protoc-gen-swiftgrpc]
 5. node grpc typescript (here)[https://github.com/agreatfool/grpc_tools_node_protoc_ts]
 
 ## Windows binaries
