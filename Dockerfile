@@ -1,6 +1,6 @@
 FROM swift:latest as all_builder
 
-ENV PROTOC_VERSION=3.5.1 \
+ENV PROTOC_VERSION=3.6.1 \
     GO_VERSION=1.10.3
 
 RUN apt-get -q update \
@@ -10,6 +10,7 @@ RUN apt-get -q update \
 # Build and install the swiftgrpc plugin
 RUN git clone https://github.com/grpc/grpc-swift \
     && cd grpc-swift \
+    && git checkout tags/0.4.3 \
     && make \
     && cp protoc-gen-swift protoc-gen-swiftgrpc /usr/bin/ \
     && cd / \

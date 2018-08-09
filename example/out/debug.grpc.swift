@@ -109,38 +109,10 @@ internal final class Debug_DebugServiceClient: ServiceClientBase, Debug_DebugSer
 /// To build a server, implement a class that conforms to this protocol.
 /// If one of the methods returning `ServerStatus?` returns nil,
 /// it is expected that you have already returned a status to the client by means of `session.close`.
-internal protocol Debug_DebugProvider: ServiceProvider {
+internal protocol Debug_DebugProvider {
   func getVersion(request: Debug_GetVersionRequest, session: Debug_DebugGetVersionSession) throws -> Debug_GetVersionReply
   func ping(request: Debug_PingRequest, session: Debug_DebugPingSession) throws -> Debug_PingReply
   func getStream(request: Debug_GetStreamRequest, session: Debug_DebugGetStreamSession) throws -> ServerStatus?
-}
-
-extension Debug_DebugProvider {
-  internal var serviceName: String { return "debug.Debug" }
-
-  /// Determines and calls the appropriate request handler, depending on the request's method.
-  /// Throws `HandleMethodError.unknownMethod` for methods not handled by this service.
-  internal func handleMethod(_ method: String, handler: Handler) throws -> ServerStatus? {
-    switch method {
-    case "/debug.Debug/GetVersion":
-      return try Debug_DebugGetVersionSessionBase(
-        handler: handler,
-        providerBlock: { try self.getVersion(request: $0, session: $1 as! Debug_DebugGetVersionSessionBase) })
-          .run()
-    case "/debug.Debug/Ping":
-      return try Debug_DebugPingSessionBase(
-        handler: handler,
-        providerBlock: { try self.ping(request: $0, session: $1 as! Debug_DebugPingSessionBase) })
-          .run()
-    case "/debug.Debug/GetStream":
-      return try Debug_DebugGetStreamSessionBase(
-        handler: handler,
-        providerBlock: { try self.getStream(request: $0, session: $1 as! Debug_DebugGetStreamSessionBase) })
-          .run()
-    default:
-      throw HandleMethodError.unknownMethod
-    }
-  }
 }
 
 internal protocol Debug_DebugGetVersionSession: ServerSessionUnary {}
@@ -169,4 +141,50 @@ internal extension Debug_DebugGetStreamSession {
 }
 
 fileprivate final class Debug_DebugGetStreamSessionBase: ServerSessionServerStreamingBase<Debug_GetStreamRequest, Debug_GetStreamReply>, Debug_DebugGetStreamSession {}
+
+
+/// Main server for generated service
+internal final class Debug_DebugServer: ServiceServer {
+  private let provider: Debug_DebugProvider
+
+  internal init(address: String, provider: Debug_DebugProvider) {
+    self.provider = provider
+    super.init(address: address)
+  }
+
+  internal init?(address: String, certificateURL: URL, keyURL: URL, provider: Debug_DebugProvider) {
+    self.provider = provider
+    super.init(address: address, certificateURL: certificateURL, keyURL: keyURL)
+  }
+
+  internal init?(address: String, certificateString: String, keyString: String, provider: Debug_DebugProvider) {
+    self.provider = provider
+    super.init(address: address, certificateString: certificateString, keyString: keyString)
+  }
+
+  /// Determines and calls the appropriate request handler, depending on the request's method.
+  /// Throws `HandleMethodError.unknownMethod` for methods not handled by this service.
+  internal override func handleMethod(_ method: String, handler: Handler) throws -> ServerStatus? {
+    let provider = self.provider
+    switch method {
+    case "/debug.Debug/GetVersion":
+      return try Debug_DebugGetVersionSessionBase(
+        handler: handler,
+        providerBlock: { try provider.getVersion(request: $0, session: $1 as! Debug_DebugGetVersionSessionBase) })
+          .run()
+    case "/debug.Debug/Ping":
+      return try Debug_DebugPingSessionBase(
+        handler: handler,
+        providerBlock: { try provider.ping(request: $0, session: $1 as! Debug_DebugPingSessionBase) })
+          .run()
+    case "/debug.Debug/GetStream":
+      return try Debug_DebugGetStreamSessionBase(
+        handler: handler,
+        providerBlock: { try provider.getStream(request: $0, session: $1 as! Debug_DebugGetStreamSessionBase) })
+          .run()
+    default:
+      throw HandleMethodError.unknownMethod
+    }
+  }
+}
 

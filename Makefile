@@ -11,6 +11,8 @@ build:
 push:
 	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME)
 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
+	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
+	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
 
 compile-go:
 	@docker run \
