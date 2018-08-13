@@ -10,7 +10,7 @@ RUN apt-get -q update \
 # Build and install the swiftgrpc plugin
 RUN git clone https://github.com/grpc/grpc-swift \
     && cd grpc-swift \
-    && git checkout tags/0.4.3 \
+    && git checkout tags/0.5.0 \
     && make \
     && cp protoc-gen-swift protoc-gen-swiftgrpc /usr/bin/ \
     && cd / \

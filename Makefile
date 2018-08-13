@@ -9,10 +9,12 @@ build:
 	@docker build -t $(IMAGE_NAME) .
 
 push:
+	git tag $(VERSION)
 	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME)
 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
 	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
+	git push --tags
 
 compile-go:
 	@docker run \
