@@ -3,7 +3,7 @@
 PROTO_INPUT := ./example/proto ./example/proto/debug.proto
 IMAGE_NAME := grpc-tools
 DOCKER_USERNAME := anjmao
-VERSION := 1.0.2
+VERSION := 1.0.3
 
 build:
 	@docker build -t $(IMAGE_NAME) .
@@ -14,7 +14,7 @@ push:
 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
 	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
-	git push --tags
+	git push $(VERSION)
 
 compile-go:
 	@docker run \

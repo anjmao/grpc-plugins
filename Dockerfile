@@ -1,7 +1,9 @@
 FROM swift:latest as all_builder
 
 ENV PROTOC_VERSION=3.6.1 \
-    GO_VERSION=1.10.3
+    GO_VERSION=1.10.3 \
+    RN_BRIDGE_GEN_VERSION=0.0.7 \
+    GRPC_SWIFT_VERSION=0.4.3
 
 RUN apt-get -q update \
     && apt-get -q install -y unzip \
@@ -10,7 +12,7 @@ RUN apt-get -q update \
 # Build and install the swiftgrpc plugin
 RUN git clone https://github.com/grpc/grpc-swift \
     && cd grpc-swift \
-    && git checkout tags/0.5.0 \
+    && git checkout tags/${GRPC_SWIFT_VERSION} \
     && make \
     && cp protoc-gen-swift protoc-gen-swiftgrpc /usr/bin/ \
     && cd / \
@@ -45,7 +47,7 @@ RUN mkdir -p /protobuf/google/protobuf && \
 
 # Install rn-grpc-bridge node npm package
 FROM node:8.11.3 as node_js
-RUN npm install -g rn-grpc-bridge
+RUN npm install -g rn-grpc-bridge@${RN_BRIDGE_GEN_VERSION}
 
  # Main protoc image
 FROM ubuntu:16.04
