@@ -1,18 +1,17 @@
-FROM swift:latest as all_builder
+FROM swift:4.1.3 as all_builder
 
 ENV PROTOC_VERSION=3.6.1 \
     GO_VERSION=1.10.3 \
-    RN_BRIDGE_GEN_VERSION=0.0.7 \
-    GRPC_SWIFT_VERSION=0.5.0
+    RN_BRIDGE_GEN_VERSION=0.0.7
 
 RUN apt-get -q update \
     && apt-get -q install -y unzip \
     && rm -r /var/lib/apt/lists/*
 
 # Build and install the swiftgrpc plugin
-RUN git clone https://github.com/grpc/grpc-swift \
+RUN git clone https://github.com/trackforce/grpc-swift.git \
     && cd grpc-swift \
-    && git checkout tags/${GRPC_SWIFT_VERSION} \
+    && git checkout lock-deps \
     && make \
     && cp protoc-gen-swift protoc-gen-swiftgrpc /usr/bin/ \
     && cd / \

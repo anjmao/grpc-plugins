@@ -1,19 +1,19 @@
 .PHONY: build push compile-go compile-swift compile-rn-bridge
 
 PROTO_INPUT := ./example/proto ./example/proto/debug.proto
-IMAGE_NAME := grpc-tools
 DOCKER_USERNAME := anjmao
-VERSION := 1.0.4
+IMAGE_NAME := $(DOCKER_USERNAME)/grpc-tools
+VERSION := 1.0.5
 
 build:
-	@docker build -t $(IMAGE_NAME) .
+	@docker build -t $(IMAGE_NAME):$(VERSION) .
 
 push:
 	git tag $(VERSION)
-	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME)
-	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
-	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
-	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
+	@docker tag $(IMAGE_NAME) $(IMAGE_NAME)
+	@docker push $(IMAGE_NAME)
+	@docker tag $(IMAGE_NAME) $(IMAGE_NAME):$(VERSION)
+	@docker push $(IMAGE_NAME)
 	git push && git push --tags
 
 compile-go:
