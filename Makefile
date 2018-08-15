@@ -14,7 +14,7 @@ push:
 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
 	@docker tag $(IMAGE_NAME) $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME)
-	git push --tags
+	git push && git push --tags
 
 compile-go:
 	@docker run \
