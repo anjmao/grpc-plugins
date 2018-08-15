@@ -3,7 +3,7 @@ FROM swift:latest as all_builder
 ENV PROTOC_VERSION=3.6.1 \
     GO_VERSION=1.10.3 \
     RN_BRIDGE_GEN_VERSION=0.0.7 \
-    GRPC_SWIFT_VERSION=0.4.3
+    GRPC_SWIFT_VERSION=0.5.0
 
 RUN apt-get -q update \
     && apt-get -q install -y unzip \
