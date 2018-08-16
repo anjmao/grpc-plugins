@@ -3,7 +3,7 @@
 PROTO_INPUT := ./example/proto ./example/proto/debug.proto
 DOCKER_USERNAME := anjmao
 IMAGE_NAME := $(DOCKER_USERNAME)/grpc-tools
-VERSION := 1.0.5
+VERSION := 1.0.6
 
 build:
 	@docker build -t $(IMAGE_NAME):$(VERSION) .
