@@ -6,14 +6,14 @@ IMAGE_NAME := $(DOCKER_USERNAME)/grpc-tools
 VERSION := 1.0.6
 
 build:
-	@docker build -t $(IMAGE_NAME):$(VERSION) .
+	@docker build -t $(IMAGE_NAME) .
 
 push:
 	git tag $(VERSION)
-	@docker tag $(IMAGE_NAME) $(IMAGE_NAME)
-	@docker push $(IMAGE_NAME)
 	@docker tag $(IMAGE_NAME) $(IMAGE_NAME):$(VERSION)
-	@docker push $(IMAGE_NAME)
+	@docker push $(IMAGE_NAME):$(VERSION)
+	@docker tag $(IMAGE_NAME) $(IMAGE_NAME):latest
+	@docker push $(IMAGE_NAME):latest
 	git push && git push --tags
 
 compile-go:
