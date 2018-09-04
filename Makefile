@@ -3,9 +3,10 @@
 PROTO_INPUT := ./example/proto ./example/proto/debug.proto
 DOCKER_USERNAME := anjmao
 IMAGE_NAME := $(DOCKER_USERNAME)/grpc-tools
-VERSION := 1.0.6
+VERSION := 1.0.7
 
 build:
+	@docker tag $(IMAGE_NAME) $(IMAGE_NAME):latest
 	@docker build -t $(IMAGE_NAME) .
 
 push:
@@ -37,7 +38,7 @@ compile-swift:
 
 compile-rn-bridge:
 	@docker run \
-	--rm \
+	--rm 
 	-v "$$(pwd):$$(pwd)" \
 	-w "$$(pwd)" \
 	$(IMAGE_NAME) \

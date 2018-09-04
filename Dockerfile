@@ -1,8 +1,7 @@
 FROM swift:4.1.3 as all_builder
 
 ENV PROTOC_VERSION=3.6.1 \
-    GO_VERSION=1.10.3 \
-    RN_BRIDGE_GEN_VERSION=0.0.7
+    GO_VERSION=1.10.3
 
 RUN apt-get -q update \
     && apt-get -q install -y unzip \
@@ -46,6 +45,7 @@ RUN mkdir -p /protobuf/google/protobuf && \
 
 # Install rn-grpc-bridge node npm package
 FROM node:8.11.3 as node_js
+ENV RN_BRIDGE_GEN_VERSION=0.0.9
 RUN npm install -g rn-grpc-bridge@${RN_BRIDGE_GEN_VERSION}
 
  # Main protoc image
