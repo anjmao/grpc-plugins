@@ -1,6 +1,8 @@
 syntax = "proto3";
 package debug;
 
+import "google/protobuf/timestamp.proto";
+
 service Debug {
   rpc GetVersion (GetVersionRequest) returns (GetVersionReply) {}
   rpc Ping(PingRequest) returns (PingReply) {}
@@ -20,6 +22,7 @@ message PingRequest {
 
 message PingReply {
   string message = 1;
+  google.protobuf.Timestamp date = 2;
 }
 
 message GetStreamRequest {
