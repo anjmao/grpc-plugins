@@ -45,7 +45,7 @@ RUN mkdir -p /protobuf/google/protobuf && \
 
 # Install rn-grpc-bridge node npm package
 FROM node:8.11.3 as node_js
-ENV RN_BRIDGE_GEN_VERSION=0.0.10
+ENV RN_BRIDGE_GEN_VERSION=0.0.11
 RUN npm install -g rn-grpc-bridge@${RN_BRIDGE_GEN_VERSION}
 
  # Main protoc image
